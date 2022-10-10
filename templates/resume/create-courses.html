@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+
+{% block content %}
+{% include 'resume/partials/main-nav.html' %}
+<div class="container d-flex d-flex flex-column flex-md-row">
+    {% include 'resume/partials/section-nav.html' with resume=resume %}
+    <div class="container col-md-9">
+        <h1>Education: </h1>
+        {% for course in resume.get_courses_qs %}
+            {% include 'resume/partials/course-inline.html' with course=course %}
+        {% endfor %}
+        <div id="course-create">
+
+        </div>
+        <button class="btn btn-primary" hx-get="{{ new_course_url }}" hx-target="#course-create" hx-swap="beforeend">Add more</button>
+    </div>
+</div>
+{% endblock content %}

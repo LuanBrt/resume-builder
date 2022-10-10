@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+@page { size: Letter;
+        margin: 0cm;
+        transform: scale(1.0);
+        transform-origin: 0 0;
+        
+    }
+
+* {
+    font-family: 'Poppins', sans-serif;
+    font-size: 98%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    min-height: 100vh;
+}
+
+.darkblue {
+    background: #003147;
+}
+
+.darkbluetext {
+    color: #003147;
+}
+
+.lightblue {
+    background: #03a9f4;
+}
+
+.lightbluetext {
+    color: #03a9f4;
+}
+
+.container {
+    width: 100%;
+    height:100%;
+    background: #fff;
+    box-shadow: 0 35px 55px rgba(0,0,0,0.1);
+}
+
+.left_side {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    padding: 20px 10px;
+}
+
+.right_side {
+    position: absolute;
+    height: 100%;
+    width: calc(100% - 300px);
+    left: 300px;
+    background: #fff;
+    padding: 40px;
+}
+
+.profile_text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 100px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile_text .imgBx {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;;
+}
+.profile_text .imgBx  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile_text h2 {
+    color: #fff;
+    font-size: 1.5em;
+    margin-top: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.4em;
+}
+
+.profile_text h2 span {
+    font-size: 0.8em;
+    font-weight: 300;
+
+}
+
+.contact_info {
+    
+    padding-top: 40px;
+
+}
+
+.title {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.contact_info ul {
+    position: relative;
+    list-style: none;
+}
+
+.contact_info ul li {
+    position: relative;
+    margin: 10px 0;
+
+}
+
+.contact_info ul li span {
+    color: #fff;
+    font-weight: 300;
+}
+
+.contact_info.education li {
+    margin-bottom: 15px; 
+}
+
+.contact_info.education h5 {
+    font-weight: 500;
+}
+
+.contact_info.education h4:nth-child(2) {
+    color: #fff;
+    font-weight: 500;
+}
+
+.contact_info.education h4 {
+    color: #fff;
+    font-weight: 300;
+}
+
+
+.about {
+
+    margin-bottom: 50px;
+}
+
+.about:last-child {
+    margin-bottom: 0;
+}
+
+.title2 {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+
+}
+
+p {
+    color: #333;
+}
+
+.about-text {
+
+    text-align: justify;
+}
+
+.box {
+    display: flex;
+    flex-direction: row;
+    margin: 20px 0;
+}
+
+.year_company {
+    width: 150px;
+    padding: 3px;
+}
+
+.year_company h5 {
+    text-transform: uppercase;
+    color: #848c90;
+    font-weight: 600;
+}
+
+.text {
+
+    text-align: justify;
+    width: 400px;
+}
+
+.text h4 {
+    text-transform: uppercase;
+    font-size: 16px;
+
+}
+
+.skills .box {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.percent-row {
+    width: 100%;
+}
+
+.skills  h4 {
+    padding: 5px;
+    text-transform: uppercase;
+    color: #848c90;
+    font-weight: 500;
+}
+
+.percent {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background: #f0f0f0;
+}
+
+.skill-text {
+    min-width: 90px;
+}
+
+.percent div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+
+}

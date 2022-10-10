@@ -1,0 +1,17 @@
+<div class="container mt-3 pr-0" >
+    <h3>Sections</h3>
+    <ul class="list-group">
+        <a class="my-2 d-flex align-items-center" href="{% url 'resume:index' %}"><span class="material-icons-outlined">home</span>&nbspHome</a>
+        {% if resume %}
+            <a class="my-2 d-flex align-items-center" href="{{ resume.resume_header.get_edit_url }}"><span class="material-icons-outlined">person</span>&nbspPersonal Information</a>
+            <a class="my-2 d-flex align-items-center" href="{% if resume.resume_professional_summary %}
+                                                                {{ resume.resume_professional_summary.get_edit_url }}
+                                                            {% else %}
+                                                                {% url 'resume:create-professional-summary' resume.id %}
+                                                            {% endif %}"><span class="material-icons-outlined">description</span>&nbspSummary</a>
+            <a class="my-2 d-flex align-items-center" href="{% url 'resume:create-jobs' resume.id%}"><span class="material-icons-outlined">groups</span>&nbspJobs</a>
+            <a class="my-2 d-flex align-items-center" href="{% url 'resume:create-courses' resume.id%}"><span class="material-icons-outlined">school</span>&nbspEducation</a>
+            <a class="my-2 d-flex align-items-center" href="{% url 'resume:create-skills' resume.id%}"><span class="material-icons-outlined">list</span>&nbspSkills</a>
+        {% endif %}
+    </ul>
+</div>

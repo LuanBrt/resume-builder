@@ -1,0 +1,100 @@
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static "template_1_style.css" %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="left_side darkblue">
+            <div class="profile_text">
+                <div class="imgBx">
+                    <img src="{{ resume.resume_header.profile_picture.url }}" alt="My Profile Picture">
+                </div>
+                <h2>{{ resume.resume_header.firstname }} {{ resume.resume_header.lastname }}
+                    <br>
+                    <span>{{ resume.resume_header.profession }}</span>
+                </h2>
+            </div>
+
+            <div class="contact_info">
+                <h3 class="title" >Contact Info</h3>
+                <ul>
+                    {% for contact, value in resume.resume_header.get_optional_info.items %}
+                    <li>
+                        <span class="text">{{ contact }}: </span>
+                        <span class="text">{{ value }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="contact_info education">
+                <h3 class="title" >Education</h3>
+                <ul>
+                    {% for course in resume.get_courses_qs %}
+                    <li>
+                        {% if course.entry_date and course.leave_date %}
+                            <h5 class="lightbluetext">{{ course.entry_date }} - {{ course.leave_date }}</h5>
+                        {% endif %}
+                        <h4>{{ course.major }}</h4>
+                        <h4>{{ course.college_name }}</h4>
+                        <br>
+                        <span class="text" >{{ course.description }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+        <div class="right_side">
+            <div class="about">
+                <h2 class="title2 darkbluetext">About Me</h2>
+                <p class="about-text">
+                    {{ resume.resume_professional_summary.description }}
+                </p>
+            </div>
+            <div class="about">
+                <h2 class="title2 darkbluetext">Experience</h2>
+                {% for job in resume.get_jobs_qs %}
+                <div class="box">
+                    <div class="year_company">
+                        {% if job.entry_date and job.leave_date %}
+                            <h5>{{ job.entry_date }} - {{ job.leave_date }}</h5>
+                        {% endif %}
+                        <h5>{{ job.company_name }}</h5>
+                    </div>
+                    <div class="text">
+                        <h4 class="lightbluetext" >{{ job.occupation }}</h4>
+                        <p>{{ job.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="about skills">
+                <h2 class="title2 darkbluetext">Skills</h2>
+                <table>
+                    <tbody>
+                {% for skill in resume.get_skills_qs %}
+                    <tr>
+                        <td>
+                            <h4 class="skill-text">{{ skill.skill_summary }}</h4>
+                        </td>
+                        <td class="percent-row">
+                            <div class="percent">
+                                <div class="lightblue" style="width: {% widthratio skill.rating 5 100 %}%;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

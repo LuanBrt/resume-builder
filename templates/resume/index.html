@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'resume/partials/main-nav.html' %}
+<div class="container py-2">
+    <div class="d-flex justify-content-between">
+        <h1>Resumes</h1>
+        <div><a class="btn  btn-primary" href="{% url 'resume:create-header'%}">Create New</a></div>
+    </div>
+</div>
+<div class="container py-2 " >
+    <div class="row pb-6 mb-4">
+        {% for resume in qs %}
+        <div id="resume-{{ resume.id }}" class="col-lg-4 col-md-6 mb-3 mb-lg-3 " >
+            <div class="card shadow text-center py-3" >
+                <img class="rounded-circle shadow-sm mx-auto " src="{{ resume.resume_header.profile_picture.url }}" width="250" height="250" style="object-fit: cover;" alt="My Profile Picture">
+                <div class="card-body ">
+                    <h5 class="card-title">{{ resume.resume_header.firstname }} {{ resume.resume_header.lastname }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ resume.resume_header.profession }}</h6>
+                    <a class="btn btn-primary mt-auto mx-auto" href="{{ resume.get_edit_url }}">Edit</a>
+                    <a class="btn btn-primary mt-auto mx-auto" href="{% url 'resume:generate-pdf' resume.id %}">Generate PDF</a>
+                    <a class="btn btn-secondary mt-auto mx-auto" href="#" hx-trigger="click" hx-delete="{{ resume.get_delete_url }}" hx-target="#resume-{{ resume.id }}" hx-swap="delete" >
+                        <span class="material-icons-outlined">
+                            delete
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+</div>
+{% endblock content %}

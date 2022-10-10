@@ -1,0 +1,9 @@
+<div class="card my-2" id="course-{{ course.id }}">
+    <div class="row d-flex  ml-2">
+        <p class="col-8 my-2"><b>{{ course.major }}</b> | {{ course.college_name }}</p>
+        <div class="btn-group col-4 flex-wrap">
+            <button class="btn btn-primary rounded-0" hx-trigger="click" type="button" hx-get="{{ course.get_edit_url }}" hx-target="#course-{{ course.id }}"hx-swap="outerHTML" >Edit</button>
+            <a class="btn btn-secondary rounded-0" href="#" hx-trigger="click" hx-delete="{{ course.get_delete_url }}" hx-target="#course-{{ course.id }}" hx-swap="delete" >Delete</a>
+        </div>
+    </div>
+</div>

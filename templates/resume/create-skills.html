@@ -1,0 +1,20 @@
+{% extends 'base.html'%}
+
+
+{% block content %}
+{% include 'resume/partials/main-nav.html' %}
+<div class="container d-flex d-flex flex-column flex-md-row">
+    {% include 'resume/partials/section-nav.html'%}
+    <div class="container col-md-9">
+        <h1>Skills: </h1>
+        {% for skill in resume.get_skills_qs %}
+            <div hx-trigger="load" hx-get="{{ skill.get_edit_url }}"></div>
+        {% endfor %}
+        <div id="skill-create">
+            
+        </div>
+
+        <button class="btn btn-primary" hx-get="{{ new_skill_url }}" hx-target="#skill-create" hx-swap="beforeend">Add more</button>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+
+{% block content %}
+{% include 'resume/partials/main-nav.html' %}
+<div class="container d-flex flex-column flex-md-row" >
+    {% include 'resume/partials/section-nav.html' with resume=resume %}
+    <div class="container col-md-9">
+        <h1>Jobs: </h1>
+        {% for job in resume.get_jobs_qs %}  
+            {% include 'resume/partials/job-inline.html' with job=job %}
+        {% endfor %}
+        <div id="job-create">
+
+        </div>
+        <button class="btn btn-primary" hx-get="{{ new_job_url }}" hx-target="#job-create" hx-swap="beforeend">Add more</button>
+    </div>
+</div>
+{% endblock content %}
