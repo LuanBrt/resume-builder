@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from resume.forms import ResumeCourseForm, ResumeHeaderForm, ResumeJobForm, ResumeSkillForm, ResumeSummaryForm
 from resume.models import Resume, ResumeCourse, ResumeJob, ResumeSkill
 
+# Index view of the application
 @login_required
 def index_view(request):
     qs = Resume.objects.filter(user=request.user)
@@ -17,9 +18,9 @@ def index_view(request):
     }
     return render(request, 'resume/index.html', context)
 
+# Render the resume data in a template
 @login_required
 def generate_pdf(request, resume_id):
-    """ Rendering the resume data in a template """
     
     resume = Resume.objects.get(id=resume_id, user=request.user)
     context = {
@@ -34,6 +35,7 @@ def generate_pdf(request, resume_id):
     buffer.seek(0)
     return FileResponse(buffer, filename="resume.pdf")
 
+# Delete a resume via htmx request
 @login_required
 def delete_resume_hx_view(request, resume_id):
     if not request.htmx:
@@ -46,6 +48,7 @@ def delete_resume_hx_view(request, resume_id):
 
     return HttpResponse()
 
+# Create a header and a resume for it
 @login_required
 def create_header_view(request):
     form = ResumeHeaderForm(request.POST or None, request.FILES or None)
@@ -61,6 +64,7 @@ def create_header_view(request):
 
     return render(request, 'resume/create-header.html', context)
 
+# View for editing a header for the resume specified in the url
 @login_required
 def edit_header_view(request, resume_id):
     resume = Resume.objects.get(id=resume_id, user=request.user)
@@ -76,6 +80,7 @@ def edit_header_view(request, resume_id):
         
     return render(request, 'resume/create-header.html', context)
 
+# View for creating a summary for the resume specified in the url
 @login_required
 def create_professional_summary_view(request, resume_id):
     form = ResumeSummaryForm(request.POST or None)
@@ -97,6 +102,7 @@ def create_professional_summary_view(request, resume_id):
 
     return render(request, 'resume/create-professional-summary.html', context)
 
+# View for editing a summary for the resume specified in the url
 @login_required
 def edit_professional_summary_view(request, resume_id):
     if resume_id is None:
@@ -152,9 +158,8 @@ def delete_job_hx_view(request, resume_id, object_id):
 def delete_course_hx_view(request, resume_id, object_id):
     return delete_object_hx_generic_view(request, resume_id, object_id, ResumeCourse)
 
-
+# generic htmx view for creating multiple instances of a class in a single view
 def create_object_generic_view(request, resume_id, reverse_url, template_name, generic_name):
-    # to be used on the add more buttons
     if resume_id is None:
         raise Http404
 
@@ -169,6 +174,7 @@ def create_object_generic_view(request, resume_id, reverse_url, template_name, g
 
     return render(request, f'resume/{template_name}', context)
 
+# generic htmx view for deleting instances of a class
 def delete_object_hx_generic_view(request, resume_id, object_id, ResumeObjectClass):
     if not request.htmx:
         raise Http404
@@ -182,6 +188,7 @@ def delete_object_hx_generic_view(request, resume_id, object_id, ResumeObjectCla
 
     return HttpResponse()
 
+# generic htmx view for updating multiple instances of a class in a single view
 def create_update_object_hx_generic_view(request, resume_id, object_id, reverse_url, ResumeObjectClass, ResumeObjectClassForm, generic_name, success_template):
     if not request.htmx:
         raise Http404

@@ -1,25 +1,12 @@
-
-from distutils.command.upload import upload
 import os
 import uuid
 from django.db import models
-from django.core import validators
 from django.urls import reverse
 from django.db.models.signals import post_delete, pre_save
 from django.conf import settings
 
-# Sections: Heading, Professional Summary, Skills, Work History, Education
 
-# Heading: personal information (name, profession, city, state, phone, email + dinamic other fields)
-# Professional Summary: just the description text
-
-# Skills: dinamic added text fields with rating of ability
-# Education: what, where, duration, description
-# Work History: dianmically added (occupation ,company name, entry and leave date, description about it)
-
-# Create your models here.
-
-
+# The header of the Resume, contains all the personal information
 class ResumeHeader(models.Model):
 
     def get_profile_picture_path(instance, filename):
@@ -56,13 +43,14 @@ class ResumeHeader(models.Model):
         
         return filled_fields
 
+# The summary of the Resume
 class ResumeProfessionalSummary(models.Model):
     description = models.TextField()
 
     def get_edit_url(self):
         return reverse('resume:edit-professional-summary', kwargs={'resume_id': self.resume.id})
     
-    
+# The main resume class, wraps up every other section of the resume
 class Resume(models.Model): 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     resume_header = models.OneToOneField(ResumeHeader, on_delete=models.CASCADE)
@@ -71,7 +59,6 @@ class Resume(models.Model):
     def get_edit_url(self):
         return self.resume_header.get_edit_url()
 
-    
     def get_delete_url(self):
         return reverse('resume:hx-resume-delete', kwargs={'resume_id': self.id})
 
@@ -84,7 +71,7 @@ class Resume(models.Model):
     def get_courses_qs(self):
         return self.resumecourse_set.all()
 
-
+# Used to represent the work history section of the resume
 class ResumeJob(models.Model):
     parent_resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
     occupation = models.CharField(max_length=150)
@@ -99,6 +86,7 @@ class ResumeJob(models.Model):
     def get_delete_url(self):
         return reverse('resume:hx-job-delete', kwargs={'resume_id': self.parent_resume.id, 'object_id': self.id})
 
+# Used to represent the skills list section of the resume
 class ResumeSkill(models.Model):
 
     BASIC = 1
@@ -128,6 +116,7 @@ class ResumeSkill(models.Model):
     def get_rating_string(self):
         return self.RATING[self.rating-1][1]
 
+# Used to represent the education section of the resume
 class ResumeCourse(models.Model):
     parent_resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
     major = models.CharField(max_length=150)
@@ -141,7 +130,7 @@ class ResumeCourse(models.Model):
 
     def get_delete_url(self):
         return reverse('resume:hx-course-delete', kwargs={'resume_id': self.parent_resume.id, 'object_id': self.id})
-
+# Used to delete all of the dependencies of a resume
 def delete_related_dependencies(sender, instance, **kwargs):
     resume_header = instance.resume_header
     resume_professional_summary = instance.resume_professional_summary
@@ -150,6 +139,7 @@ def delete_related_dependencies(sender, instance, **kwargs):
     if resume_professional_summary is not None:
         resume_professional_summary.delete()
 
+# Functions used to delete images from the memory
 def auto_delete_profile_picture(sender, instance, **kwargs):
     if instance.profile_picture:
         if os.path.isfile(instance.profile_picture.path):
